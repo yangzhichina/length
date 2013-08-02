@@ -1,9 +1,12 @@
 // node.cpp
 //
 
+#include <iostream>
 #include <map>
 #include <utility>
+
 #include "node.h"
+#include "parser.hpp" // It must be this position.
 
 class ConvertionMap
 {
@@ -36,11 +39,47 @@ void NConvertion::add() const
 
 double NExpression::calculate() const
 {
-    return 0.0;
+    double sum = 0.0; // m
+
+    if (expr)
+    {
+        switch (calc)
+        {
+            case T_PLUS:
+                sum = expr->calculate() + decl.convert();
+                break;
+            case T_MINUS:
+                sum = expr->calculate() - decl.convert();
+                break;
+            case T_MUL:
+                sum = expr->calculate() * decl.convert();
+                break;
+            case T_DIV:
+                sum = expr->calculate() / decl.convert();
+                break;
+
+            default:
+                break;
+        }
+    }
+    else
+    {
+        sum = decl.convert();
+    }
+
+    return sum;
 }
 
 void NStatement::print() const
 {
+    if (isCalculable)
+    {
+        std::cout << expression.calculate() << " m" << std::endl;
+    }
+    else
+    {
+        convertion.add();
+    }
 }
 
 void NBlock::print() const

@@ -21,7 +21,7 @@ ifeq ($(findstring tokens.o,$(OBJ)),)
 OBJ += tokens.o
 endif
 
-all: $(PROG)
+all: parser.cpp tokens.cpp $(PROG)
 
 $(PROG): $(OBJ)
 	$(CPP) $(OBJ) -o $(PROG)
