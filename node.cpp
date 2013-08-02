@@ -87,6 +87,7 @@ void NBlock::print() const
     Statements::const_iterator c_iter = stmts.begin();
     for (; c_iter != stmts.end(); ++c_iter)
     {
+        std::cout << "How\n";
         (*c_iter)->print();
     }
 }

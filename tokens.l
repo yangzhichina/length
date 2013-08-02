@@ -11,7 +11,7 @@ extern "C" int yywrap() {}
 
 %%
 
-[ \t\n]                 ;
+[ \t\r\n]               ;
 [0-9]+\.[0-9]*          SAVE_TOKEN; return T_DOUBLE;
 [0-9]+                  SAVE_TOKEN; return T_INTEGER;
 "="                     return TOKEN(T_EQUAL);
