@@ -11,6 +11,7 @@
 
 class NStatement;
 class NExpression;
+class NDeclaration
 
 typedef std::vector<NStatement*> Statements;
 
@@ -37,69 +38,51 @@ public:
     virtual double getResult() = 0;
 };
 
-class NBlock
+struct NBlock
 {
-public:
-    Statements const& getStatements() const { return m_stmt; }
-    Statements& getStatements() { return m_stmt; }
-
-private:
-    Statements m_stmts;
+    Statements stmts;
 };
 
-class NStatement
+struct NStatement
 {
-public:
-    NStatement(Node* node);
-
-private:
-    Node* m_node;
+    NStatement(): isCalculable(false), convertion(), expression() {}
+    bool isCalculable;
+    NConvertion convertion;
+    NExpression expression;
 };
 
-class NConvertion : public ConvertionNode
+struct NConvertion
 {
-public:
-    virtual ~NConvertion() {}
-    virtual std::pair<int, double> makeConvertion();
+    NConvertion(): l(), r() {}
+
+    NDeclaration l;
+    NDeclaration r;
 };
 
-class NExpression : public ExpressionNode
+struct NExpression
 {
-public:
-    virtual ~NExpression() {}
-    virtual double getResult();
+    NExpression(): expr(NULL), calc(0), decl() {}
+
+    NExpression* expr;
+    int calc;
+    NDeclaration decl;
 };
 
-class NDeclaration : public ExpressionNode
+struct NDeclaration
 {
-public:
-    virtual ~NDeclaration() {}
-    virtual double getResult();
+    NDeclaration() {}
+
+    Numeric numeric;
+    int unit;
 };
 
-class NDouble
+struct Numeric
 {
-public:
-    NDouble(std::string const& txt);
-    double value() const;
+    Numeric(): isDouble(false), dValue(0.0), iValue(0) {}
 
-private:
-    std::string m_value;
-};
-
-class NInteger
-{
-public:
-    NInteger(std::string const& txt);
-    int value() const;
-
-private:
-    std::string m_value;
-};
-
-class NBinaryOperator
-{
-public:
+    bool isDouble;
+    double dValue;
+    long iValue;
 };
 
 #endif /* __CODE_H__ */
