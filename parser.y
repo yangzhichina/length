@@ -6,12 +6,12 @@ void yyerror(const char* s) { printf("ERROR: %s\n", s); }
 %}
 
 %union {
-    Node* node;
     NBlock* block;
     NStatement* stmt;
     NConvertion* convertion;
     NDeclaration* decl;
     NExpression* expr;
+    Numeric* numeric;
     std::vector<NConvertion*>* convertion_vec;
     std::vector<NExpression*>* expr_vec;
     std::string* string;
@@ -26,7 +26,7 @@ void yyerror(const char* s) { printf("ERROR: %s\n", s); }
 %type <decl> decl
 %type <stmt> stmt
 %type <expr> expr
-%type <string> numeric
+%type <numeric> numeric
 %type <block> program stmts
 %type <token> calc unit
 

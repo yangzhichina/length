@@ -4,51 +4,31 @@
 #ifndef __CODE_H__
 #define __CODE_H__
 
+#include <stdio.h>
 #include <string>
-#include <map>
 #include <vector>
-#include <util>
 
 class NStatement;
-class NExpression;
-class NDeclaration
 
 typedef std::vector<NStatement*> Statements;
 
-class Node
+struct Numeric
 {
-public:
-    virtual ~Node() {}
-    virtual bool isCalculable() const = 0;
+    Numeric(): isDouble(false), dValue(0.0), iValue(0) {}
+
+    bool isDouble;
+    double dValue;
+    int iValue;
 };
 
-class ConvertionNode : public Node
+struct NDeclaration
 {
-public:
-    virtual ~ConvertionNode() {}
-    virtual bool isCalculable() const { return false; }
-    virtual std::pair<int, double> makeConvertion() = 0;
-};
+    NDeclaration() {}
 
-class ExpressionNode : public Node
-{
-public:
-    virtual ~ExpressionNode() {}
-    virtual bool isCalculable() const { return true; }
-    virtual double getResult() = 0;
-};
+    Numeric numeric;
+    int unit;
 
-struct NBlock
-{
-    Statements stmts;
-};
-
-struct NStatement
-{
-    NStatement(): isCalculable(false), convertion(), expression() {}
-    bool isCalculable;
-    NConvertion convertion;
-    NExpression expression;
+    double convert() const;
 };
 
 struct NConvertion
@@ -57,6 +37,8 @@ struct NConvertion
 
     NDeclaration l;
     NDeclaration r;
+
+    void add() const;
 };
 
 struct NExpression
@@ -66,23 +48,25 @@ struct NExpression
     NExpression* expr;
     int calc;
     NDeclaration decl;
+
+    double calculate() const;
 };
 
-struct NDeclaration
+struct NStatement
 {
-    NDeclaration() {}
+    NStatement(): isCalculable(false), convertion(), expression() {}
 
-    Numeric numeric;
-    int unit;
+    bool isCalculable;
+    NConvertion convertion;
+    NExpression expression;
+
+    void print() const;
 };
 
-struct Numeric
+struct NBlock
 {
-    Numeric(): isDouble(false), dValue(0.0), iValue(0) {}
-
-    bool isDouble;
-    double dValue;
-    long iValue;
+    Statements stmts;
+    void print() const;
 };
 
 #endif /* __CODE_H__ */
