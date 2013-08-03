@@ -1,8 +1,10 @@
 %{
+
 #include "node.h"
 NBlock* programBlock;
 extern int yylex();
 void yyerror(const char* s) { printf("ERROR: %s\n", s); }
+
 %}
 
 %union {
@@ -12,15 +14,13 @@ void yyerror(const char* s) { printf("ERROR: %s\n", s); }
     NDeclaration* decl;
     NExpression* expr;
     Numeric* numeric;
-    std::vector<NConvertion*>* convertion_vec;
-    std::vector<NExpression*>* expr_vec;
     std::string* string;
     int token;
 }
 
 %token <string> T_INTEGER T_DOUBLE
 %token <token> T_PLUS T_MINUS T_MUL T_DIV T_EQUAL
-%token <token> T_M T_KM T_MILE T_MILES T_YARD T_YARDS T_INCH T_INCHES T_FOOT T_FEET T_FATH T_FATHS T_FURLONG
+%token <token> T_M T_KM T_MILE T_YARD T_INCH T_FOOT T_FATH T_FURLONG
 
 %type <convertion> convertion
 %type <decl> decl
@@ -128,11 +128,11 @@ numeric
 ;
 
 unit : T_M | T_KM
-     | T_MILE | T_MILES
-     | T_YARD | T_YARDS
-     | T_INCH | T_INCHES
-     | T_FOOT | T_FEET
-     | T_FATH | T_FATHS
+     | T_MILE 
+     | T_YARD 
+     | T_INCH
+     | T_FOOT 
+     | T_FATH 
      | T_FURLONG
      ;
 
