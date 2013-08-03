@@ -89,7 +89,7 @@ expr
 }
 | expr calc decl {
     $$ = new NExpression();
-    $$->expr = $1;
+    $$->expr.reset($1);
     $$->calc = $2;
     $$->decl = *$3;
 

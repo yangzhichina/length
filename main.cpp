@@ -28,5 +28,8 @@ int main(int argc, char* argv[])
     programBlock->print();
 
     fclose(f);
+
+    delete programBlock;
+
     return 0;
 }

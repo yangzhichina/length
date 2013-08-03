@@ -28,7 +28,7 @@ double NExpression::calculate() const
 {
     double sum = 0.0; // m
 
-    if (expr)
+    if (expr.get())
     {
         switch (calc)
         {
@@ -66,6 +66,14 @@ void NStatement::print() const
     else
     {
         convertion.add();
+    }
+}
+
+NBlock::~NBlock()
+{
+    for (int i = 0; i < stmts.size(); ++i)
+    {
+        delete stmts[i];
     }
 }
 

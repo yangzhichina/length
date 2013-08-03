@@ -5,6 +5,7 @@
 #define __CODE_H__
 
 #include <stdio.h>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -44,9 +45,8 @@ struct NConvertion
 struct NExpression
 {
     NExpression(): expr(NULL), calc(0), decl() {}
-//    ~NExpression() { delete expr; }
 
-    NExpression* expr;
+    std::auto_ptr<NExpression> expr;
     int calc;
     NDeclaration decl;
 
@@ -66,6 +66,9 @@ struct NStatement
 
 struct NBlock
 {
+    NBlock() {}
+    ~NBlock();
+
     Statements stmts;
     void print() const;
 };
