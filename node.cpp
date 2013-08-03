@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <utility>
 
@@ -60,7 +61,7 @@ void NStatement::print() const
 {
     if (isCalculable)
     {
-        std::cout << expression.calculate() << " m" << std::endl;
+        std::cout << std::setiosflags(std::ios::fixed) << std::setprecision(2) << expression.calculate() << " m" << std::endl;
     }
     else
     {
@@ -70,6 +71,8 @@ void NStatement::print() const
 
 void NBlock::print() const
 {
+    std::cout << "yangzhichina@gmail.com" << std::endl << std::endl;
+
     Statements::const_iterator c_iter = stmts.begin();
     for (; c_iter != stmts.end(); ++c_iter)
     {
