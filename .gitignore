@@ -1,0 +1,5 @@
+a.out
+*.o
+*.d
+.DT_Store
+*.swp
