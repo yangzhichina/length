@@ -1,11 +1,11 @@
 # Makefile
 #
 
-PROG = a.exe
+PROG = a.out
 CC = gcc
 CPP = g++
 
-CFLAGS = -O2
+CFLAGS = -g
 
 TEMP_TOKENS_CPP = tokens.cpp
 TEMP_PARSER_CPP = parser.hpp parser.cpp

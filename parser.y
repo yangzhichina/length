@@ -20,7 +20,7 @@ void yyerror(const char* s) { printf("ERROR: %s\n", s); }
 
 %token <string> T_INTEGER T_DOUBLE
 %token <token> T_PLUS T_MINUS T_MUL T_DIV T_EQUAL
-%token <token> T_M T_MILE T_MILES T_YARD T_YARDS T_INCH T_INCHES T_FOOT T_FEET T_FATH T_FATHS T_FURLONG
+%token <token> T_M T_KM T_MILE T_MILES T_YARD T_YARDS T_INCH T_INCHES T_FOOT T_FEET T_FATH T_FATHS T_FURLONG
 
 %type <convertion> convertion
 %type <decl> decl
@@ -82,17 +82,18 @@ convertion
 ;
 
 expr
-: expr calc decl {
+: decl {
+    $$ = new NExpression();
+    $$->decl = *$1;
+    delete $1;
+}
+| expr calc decl {
     $$ = new NExpression();
     $$->expr = $1;
     $$->calc = $2;
     $$->decl = *$3;
+
     delete $3;
-}
-| decl {
-    $$ = new NExpression();
-    $$->decl = *$1;
-    delete $1;
 }
 ;
 
@@ -126,7 +127,7 @@ numeric
 }
 ;
 
-unit : T_M
+unit : T_M | T_KM
      | T_MILE | T_MILES
      | T_YARD | T_YARDS
      | T_INCH | T_INCHES

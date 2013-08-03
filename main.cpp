@@ -12,7 +12,7 @@ extern "C" FILE *yyin;
 
 int main(int argc, char* argv[])
 {
-    yydebug = 1;
+    //yydebug = 1;
 
     FILE* f = fopen("input.txt", "r");
     if (!f)
@@ -23,12 +23,10 @@ int main(int argc, char* argv[])
 
     yyin = f;
 
-    do {
-        yyparse();
-    } while(!feof(yyin));
-
-    std::cout << "Hello\n";
+    yyparse();
 
     programBlock->print();
+
+    fclose(f);
     return 0;
 }

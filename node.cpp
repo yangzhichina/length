@@ -8,33 +8,19 @@
 #include "node.h"
 #include "parser.hpp" // It must be this position.
 
-class ConvertionMap
-{
-public:
-    static std::map<int, double>& get();
-};
-
-std::map<int, double>& ConvertionMap::get()
-{
-    static std::map<int, double>* m;
-
-    if (m == NULL)
-        std::map<int, double>* m = new std::map<int, double>();
-
-    return *m;
-}
+std::map<int, double> g_map;
 
 double NDeclaration::convert() const
 {
     double p = numeric.isDouble ? numeric.dValue : numeric.iValue;
-    double converted = p * ConvertionMap::get()[unit];
+    double converted = p * g_map[unit];
     return converted;
 }
 
 void NConvertion::add() const
 {
     std::pair<int, double> item = std::make_pair(l.unit, r.numeric.isDouble ? r.numeric.dValue : r.numeric.iValue);
-    ConvertionMap::get().insert(item);
+    g_map.insert(item);
 }
 
 double NExpression::calculate() const
@@ -87,7 +73,6 @@ void NBlock::print() const
     Statements::const_iterator c_iter = stmts.begin();
     for (; c_iter != stmts.end(); ++c_iter)
     {
-        std::cout << "How\n";
         (*c_iter)->print();
     }
 }

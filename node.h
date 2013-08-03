@@ -44,6 +44,7 @@ struct NConvertion
 struct NExpression
 {
     NExpression(): expr(NULL), calc(0), decl() {}
+//    ~NExpression() { delete expr; }
 
     NExpression* expr;
     int calc;
